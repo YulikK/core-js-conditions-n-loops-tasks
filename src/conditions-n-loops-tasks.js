@@ -425,19 +425,40 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(arr) {
-  const n = arr.length;
-  const arrSorted = arr;
-  for (let i = 0; i < n - 1; i += 1) {
-    for (let j = 0; j < n - 1 - i; j += 1) {
-      if (arrSorted[j + 1] < arrSorted[j]) {
-        const t = arrSorted[j + 1];
-        arrSorted[j + 1] = arrSorted[j];
-        arrSorted[j] = t;
-      }
+
+function merge(left, right) {
+  const results = [];
+
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      results.push(left.shift());
+    } else {
+      results.push(right.shift());
     }
   }
-  return arrSorted;
+
+  return [...results, ...left, ...right];
+}
+function mergeSort(arr) {
+  const arrResult = arr;
+  if (arrResult.length === 1) {
+    return arr;
+  }
+
+  const center = Math.floor(arrResult.length / 2);
+  const left = arrResult.slice(0, center);
+  const right = arrResult.slice(center);
+
+  return merge(mergeSort(left), mergeSort(right));
+}
+function sortByAsc(arr) {
+  let arrResult = arr;
+  const arrCopy = arr;
+  arrResult = mergeSort(arrResult);
+  for (let i = 0; i < arrResult.length; i += 1) {
+    arrCopy[i] = arrResult[i];
+  }
+  return arr;
 }
 
 /**
