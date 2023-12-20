@@ -480,7 +480,8 @@ function sortByAsc(arr) {
  */
 function shuffleChar(str, iterations) {
   let result = [...str];
-  for (let i = 0; i < iterations; i += 1) {
+  let iterationToStart = iterations;
+  for (let i = 0; i < iterationToStart; i += 1) {
     const odd = [];
     let oddI = 0;
     const even = [];
@@ -492,6 +493,10 @@ function shuffleChar(str, iterations) {
       oddI += 1;
     }
     result = [...even, ...odd];
+    if (String(result).replace(/[\s.,%]/g, '') === str) {
+      iterationToStart = iterations % (i + 1);
+      i = -1;
+    }
   }
 
   return String(result).replace(/[\s.,%]/g, '');
