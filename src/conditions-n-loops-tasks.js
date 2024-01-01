@@ -545,7 +545,7 @@ function getNearestBigger(number) {
   x = 0;
   for (let j = 0; j < indexSmaller; j += 1) x = x * 10 + numberArray[j];
 
-  result = numberArray.slice(indexSmaller, numberArray.length + 1);
+  result = Array.from(numberArray).splice(indexSmaller, numberArray.length + 1);
   result.sort();
 
   for (let j = 0; j < numberArray.length - indexSmaller; j += 1)
